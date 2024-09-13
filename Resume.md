@@ -1,0 +1,3 @@
+- Mostrar opção de formatos ao baixar os arquivos
+- Mostrar um preview do arquivo após geração
+- Reajustar responsividade
