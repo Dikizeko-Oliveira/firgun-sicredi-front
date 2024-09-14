@@ -26,8 +26,8 @@ export function TextInput({
     isValid,
 }: SelectInputProps) {
     return (
-        <label htmlFor="client" className="flex flex-col">
-            <span className="text-third font-semibold">
+        <label htmlFor="client" className="flex flex-col max-sm:text-sm">
+            <span className="text-third font-semibold ">
                 {label}
                 <span className="text-red-600">*</span>
             </span>
@@ -39,7 +39,6 @@ export function TextInput({
                 } px-4 mt-2`}
             >
                 <input
-                    autoFocus={autoFocus}
                     className="flex-1 bg-transparent placeholder:text-zinc-400 outline-none text-secondary"
                     placeholder={placeholder ? placeholder : "Digite aqui..."}
                     type={type || "text"}

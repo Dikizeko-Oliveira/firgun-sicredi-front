@@ -93,7 +93,7 @@ export function CheckBoxInput({ question, hasError }: InputProps) {
     };
 
     return (
-        <div className="flex flex-col mt-1">
+        <div className="flex flex-col mt-1 max-sm:text-sm">
             <span className="font-semibold text-third">
                 {question.name}
                 <span className="text-red-600">*</span>
@@ -113,7 +113,7 @@ export function CheckBoxInput({ question, hasError }: InputProps) {
                         />
                         <label
                             htmlFor={question.name + item.name}
-                            className="ms-2 text-base font-medium text-secondary cursor-pointer"
+                            className="w-full ms-2 text-base font-medium text-secondary cursor-pointer max-sm:text-sm"
                         >
                             {item.name}
                         </label>

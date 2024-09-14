@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Formulary } from "@/components/formulary";
@@ -16,8 +15,7 @@ interface PageProps {
 async function getQuestions(): Promise<QuestionType[]> {
     const response = await fetch_api("/questions", {
         next: {
-            revalidate: 60 * 1, // 1 dia
-            // revalidate: 60 * 60 * 24, // 1 dia
+            revalidate: 86400, // 1 dia
         },
     });
 
@@ -52,19 +50,9 @@ export async function generateMetadata({
 
 export default async function Form({ params }: PageProps) {
     const questions = await getQuestions();
-    // console.log(questions);
 
     return (
-        <div className="w-full min-h-[calc(100vh-5rem)] flex flex-col items-center gap-4 pt-14 max-lg:px-0">
-            <Image
-                src="/logo.svg"
-                className="w-48 h-fit"
-                width={550}
-                height={550}
-                alt="logo"
-                priority
-            />
-
+        <div className="w-full min-h-[calc(100vh-5rem)] flex flex-col items-center gap-4 pt-16 max-lg:px-0">
             <Formulary questions_list={questions} slug={params.slug} />
         </div>
     );

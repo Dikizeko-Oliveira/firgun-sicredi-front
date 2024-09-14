@@ -8,17 +8,8 @@ export const metadata: Metadata = {
 
 export default async function AlreadyAnswered() {
     return (
-        <div className="w-full min-h-[calc(100vh-5rem)] flex flex-col items-center gap-4 pt-14 max-lg:px-0">
-            <Image
-                src="/logo.svg"
-                className="w-48 h-fit"
-                width={550}
-                height={550}
-                alt="logo"
-                priority
-            />
-
-            <div className="w-[50vw] max-lg:w-full min-h-60 flex flex-col items-center bg-white rounded-2xl p-14 max-lg:p-5 mt-16">
+        <div className="w-full min-h-[calc(100vh-15rem)] flex flex-col items-center gap-4 pt-16 max-lg:px-0">
+            <div className="w-[50vw] max-lg:w-full max-xl:w-[70vw] min-h-60 flex flex-col items-center bg-white rounded-2xl p-14 max-lg:p-5 mt-20">
                 <h1 className="text-primary text-[2.3rem] max-lg:text-[1.5rem] max-lg:mt-[-5px] font-semibold italic mt-[-20px]">
                     Você já respondeu esse formulário!
                 </h1>

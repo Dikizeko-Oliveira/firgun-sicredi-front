@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { TextInput } from "./text-input";
 import { Modal } from "./modal";
@@ -15,7 +15,6 @@ import {
     validateCpf,
 } from "@/utils/utils";
 import { QuestionType } from "@/data/types/question";
-import Loading from "./loading";
 import { useAnswers } from "@/contexts/answers-context";
 import { SpinnerIcon } from "@/icons/SpinnerIcon";
 import { axios_api } from "@/data/api";
@@ -38,15 +37,15 @@ export function Formulary({
     const [fieldsError, setFieldsError] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [mounted, setMounted] = useState(false);
-    const [questions, setQuestions] = useState<QuestionType[]>([]);
+    // const [mounted, setMounted] = useState(false);
+    // const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [openModal, setOpenModal] = useState(false);
     const [openSubmitModal, setOpenSubmitModal] = useState(false);
 
-    useEffect(() => {
-        setQuestions(questions_list);
-        setMounted(true);
-    }, []);
+    // useEffect(() => {
+    //     setQuestions(questions_list);
+    //     setMounted(true);
+    // }, []);
 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -64,7 +63,7 @@ export function Formulary({
         } else if (!isValid) {
             scrollToTop();
         } else {
-            const questionsToAnswerLength = questions
+            const questionsToAnswerLength = questions_list
                 .filter((item) => item.screen === page)
                 .map((question) => question.id).length;
 
@@ -80,7 +79,7 @@ export function Formulary({
                 setFieldsError(true);
             } else {
                 // mais 1 por causa da questao do tipo text(cpf) que nao esta inserida no array pois nao tem pontuacao
-                if (questions.length === answers.length + 1) {
+                if (questions_list.length === answers.length + 1) {
                     setOpenSubmitModal(true);
                 } else {
                     setFieldsError(false);
@@ -112,17 +111,19 @@ export function Formulary({
             router.push("/success");
             handleCleanFormulary();
         } catch (error: any) {
-            console.log(error);
             if (
-                error?.status === 401 &&
-                error?.message === "CPF already responded"
+                error?.response?.data?.status === 401 &&
+                error?.response?.data?.message === "CPF already responded"
             ) {
-                setDays(error?.remaining_days);
-                redirect("/already-answered");
+                handleCloseSubmitModal();
+                setDays(error?.response?.data?.remaining_days);
+                router.push("/already-answered");
+                setFieldsError(false);
+            } else {
+                setFieldsError(false);
+                handleCloseSubmitModal();
+                setOpenModal(true);
             }
-            setFieldsError(false);
-            handleCloseSubmitModal();
-            setOpenModal(true);
         }
     };
 
@@ -143,11 +144,16 @@ export function Formulary({
         }
     };
 
-    if (!mounted) return <Loading />;
+    // if (!mounted)
+    //     return (
+    //         <div className="w-full flex items-center justify-center">
+    //             <Loading />
+    //         </div>
+    //     );
 
     return (
         <>
-            <div className="w-[50vw] min-h-72 max-lg:w-full flex flex-col bg-white rounded-xl p-14 max-lg:p-5 mt-40">
+            <div className="w-[50vw] min-h-72 max-lg:w-full max-xl:w-[70vw]  flex flex-col bg-white rounded-xl p-14 max-lg:p-5 mt-40">
                 <div className="flex flex-col items-center mb-8">
                     <h1 className="text-primary text-[2.3rem] max-lg:text-[1.5rem] max-lg:mt-[-5px] font-semibold italic mt-[-20px]">
                         Formulário de aprofundamento
@@ -159,7 +165,7 @@ export function Formulary({
                     </p>
                 </div>
                 <div className="w-full flex flex-col gap-6">
-                    {questions
+                    {questions_list
                         .filter((item) => item.screen === page)
                         .map((question) =>
                             question.type === "text" ? (
@@ -193,25 +199,25 @@ export function Formulary({
                             {page > 1 && (
                                 <button
                                     onClick={handlePreviuosStep}
-                                    className="w-48 h-10 rounded-3xl flex items-center justify-center text-secondary font-medium text-base bg-transparent border border-secondary transition-all hover:bg-button"
+                                    className="w-48 max-sm:w-24 max-sm:text-sm h-10 rounded-3xl flex items-center justify-center text-secondary font-medium text-base bg-transparent border border-secondary transition-all hover:bg-button"
                                 >
                                     Voltar
                                 </button>
                             )}
                             <button
                                 onClick={handleNextStep}
-                                className="w-48 h-10 ml-auto rounded-3xl flex items-center justify-center text-secondary font-medium text-base bg-button transition-all hover:bg-primary hover:text-white"
+                                className="w-48 max-sm:w-24 max-sm:text-sm h-10 ml-auto rounded-3xl flex items-center justify-center text-secondary font-medium text-base bg-button transition-all hover:bg-primary hover:text-white"
                             >
-                                {questions.length === answers.length + 1
+                                {questions_list.length === answers.length + 1
                                     ? "Enviar"
                                     : "Próximo"}
                             </button>
                         </div>
 
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center max-sm:text-sm">
                             <p>
                                 Página {page} de{" "}
-                                {Math.ceil(questions.length / 5)}
+                                {Math.ceil(questions_list.length / 5)}
                             </p>
                             <p className="text-sm text-primary mt-4">
                                 <span className="font-bold">Atenção: </span>

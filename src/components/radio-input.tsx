@@ -64,12 +64,12 @@ export function RadioInput({ question, hasError }: InputProps) {
     };
 
     return (
-        <div className="flex flex-col mt-1">
+        <div className="flex flex-col mt-1 max-sm:text-sm">
             <span className="font-semibold text-third">
                 {question.name}
                 <span className="text-red-600">*</span>
             </span>
-            <div className="w-full flex flex-wrap gap-x-8 gap-y-5 mt-3">
+            <div className="flex flex-wrap gap-x-8 gap-y-5 mt-3">
                 {question.answers.map((item) => (
                     <div key={item.id} className="flex items-center">
                         <input
@@ -84,7 +84,7 @@ export function RadioInput({ question, hasError }: InputProps) {
                         />
                         <label
                             htmlFor={question.name + item.name}
-                            className="ms-2 text-base font-medium text-secondary cursor-pointer"
+                            className="ms-2 text-base font-medium text-secondary cursor-pointer max-sm:text-sm"
                         >
                             {item.name}
                         </label>
