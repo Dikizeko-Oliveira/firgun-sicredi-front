@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         default: "firgun",
     },
 };
-
+//TODO: Melhorar imagem de fundo, esta com risco escuro no final
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,7 +24,6 @@ export default function RootLayout({
                 name="viewport"
                 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
             />
-
             <body className="text-zinc-900 antialiased bg-primary">
                 <div className="relative w-full min-h-[calc(100vh-5.5rem)] bg-[url('/background.png')] bg-cover bg-no-repeat bg-center" />
 
