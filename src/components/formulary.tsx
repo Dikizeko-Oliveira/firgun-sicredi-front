@@ -37,15 +37,10 @@ export function Formulary({
     const [fieldsError, setFieldsError] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [loading, setLoading] = useState(false);
-    // const [mounted, setMounted] = useState(false);
+    const [agree, setAgree] = useState(false);
     // const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [openModal, setOpenModal] = useState(false);
     const [openSubmitModal, setOpenSubmitModal] = useState(false);
-
-    // useEffect(() => {
-    //     setQuestions(questions_list);
-    //     setMounted(true);
-    // }, []);
 
     const handleCloseModal = () => {
         setOpenModal(false);
@@ -79,7 +74,7 @@ export function Formulary({
                 setFieldsError(true);
             } else {
                 // mais 1 por causa da questao do tipo text(cpf) que nao esta inserida no array pois nao tem pontuacao
-                if (questions_list.length === answers.length + 1) {
+                if (questions_list.length === answers.length + 1 && page === Math.ceil(questions_list.length / 5)) {
                     setOpenSubmitModal(true);
                 } else {
                     setFieldsError(false);
@@ -144,13 +139,6 @@ export function Formulary({
         }
     };
 
-    // if (!mounted)
-    //     return (
-    //         <div className="w-full flex items-center justify-center">
-    //             <Loading />
-    //         </div>
-    //     );
-
     return (
         <>
             <div className="w-[50vw] min-h-72 max-lg:w-full max-xl:w-[70vw]  flex flex-col bg-white rounded-xl p-14 max-lg:p-5 mt-40">
@@ -208,7 +196,7 @@ export function Formulary({
                                 onClick={handleNextStep}
                                 className="w-48 max-sm:w-24 max-sm:text-sm h-10 ml-auto rounded-3xl flex items-center justify-center text-secondary font-medium text-base bg-button transition-all hover:bg-primary hover:text-white"
                             >
-                                {questions_list.length === answers.length + 1
+                                {questions_list.length === answers.length + 1 && page === Math.ceil(questions_list.length / 5)
                                     ? "Enviar"
                                     : "Próximo"}
                             </button>
@@ -274,8 +262,11 @@ export function Formulary({
                         <div className="w-full flex flex-col gap-5">
                             {!loading ? (
                                 <p className="text-base font-medium text-secondary">
-                                    Tem certeza que deseja realmente enviar o
-                                    formulário?
+                                    Ao clicar em confirmar, você declara estar ciente e concordar com a coleta, uso, armazenamento e tratamento
+                                    dos seus dados pessoais, pela Firgun Tecnologia Social Ltda, com a finalidade
+                                    exclusiva de analisar o seu perfil comportamental. O tratamento dos dados se
+                                    dará com base no seu consentimento livre, expresso, informado e inequívoco,
+                                    conforme previsto na Lei Geral de Proteção de Dados Pessoais (LGPD).
                                 </p>
                             ) : (
                                 <div className="w-full flex flex-col items-center">
