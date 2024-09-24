@@ -48,6 +48,16 @@ export async function generateMetadata({
     };
 }
 
+export async function generateStaticParams() {
+    const response = await fetch_api('/list-companies')
+
+    const companies: CompanyType[] = await response.json()
+
+    return companies.map((company) => {
+        return { slug: company.slug }
+    })
+}
+
 export default async function Form({ params }: PageProps) {
     const questions = await getQuestions();
 

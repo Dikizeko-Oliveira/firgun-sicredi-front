@@ -12,7 +12,7 @@ export const size = {
     height: 630,
 };
 
-export const contentType = "image/png";
+export const contentType = "image/svg";
 
 async function getCompany(slug: string): Promise<CompanyType> {
     const response = await fetch_api(`/check-company?slug=${slug}`, {
