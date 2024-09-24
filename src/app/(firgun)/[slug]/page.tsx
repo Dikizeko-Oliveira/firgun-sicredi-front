@@ -15,7 +15,7 @@ interface PageProps {
 async function getQuestions(): Promise<QuestionType[]> {
     const response = await fetch_api("/questions", {
         next: {
-            revalidate: 86400, // 1 dia
+            revalidate: 60 * 1, // 1 dia 86400
         },
     });
 
