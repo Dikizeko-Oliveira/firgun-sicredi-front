@@ -25,6 +25,8 @@ export default function RootLayout({
                 name="viewport"
                 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
             />
+            <meta property="og:title" content="Sicredi - Firgun" />
+            <meta property="og:description" content="Formulário de aprofundamento" />
             <meta property="og:image" content="<generated>" />
             <meta property="og:image:alt" content="About Acme" />
             <meta property="og:image:type" content="image/png" />
