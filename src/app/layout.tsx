@@ -7,12 +7,13 @@ import Image from "next/image";
 const exo = Exo_2({ subsets: ["latin"], variable: "--font-exo" });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://sicredi.firgun.com.br"),
     title: {
         template: "%s | Firgun",
         default: "firgun",
     },
 };
-//TODO: Melhorar imagem de fundo, esta com risco escuro no final
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,6 +25,11 @@ export default function RootLayout({
                 name="viewport"
                 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
             />
+            <meta property="og:image" content="<generated>" />
+            <meta property="og:image:alt" content="About Acme" />
+            <meta property="og:image:type" content="image/png" />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
             <body className="text-zinc-900 antialiased bg-primary">
                 <div className="relative w-full min-h-[calc(100vh-5.5rem)] bg-[url('/background.png')] bg-cover bg-no-repeat bg-center" />
 

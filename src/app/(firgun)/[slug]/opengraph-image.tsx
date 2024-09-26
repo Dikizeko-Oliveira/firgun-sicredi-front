@@ -4,7 +4,7 @@ import colors from "tailwindcss/colors";
 import { fetch_api } from "@/data/api";
 import { CompanyType } from "@/data/types/company";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export const alt = "About Acme";
 export const size = {
@@ -12,7 +12,7 @@ export const size = {
     height: 630,
 };
 
-export const contentType = "image/svg";
+export const contentType = "image/png";
 
 async function getCompany(slug: string): Promise<CompanyType> {
     const response = await fetch_api(`/check-company?slug=${slug}`, {
