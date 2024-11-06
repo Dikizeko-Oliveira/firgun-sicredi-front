@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -7,63 +8,63 @@ import { axios_api, fetch_api } from "@/data/api";
 import { CompanyType } from "@/data/types/company";
 
 interface PageProps {
-    params: {
-        slug: string;
-    };
+  params: {
+    slug: string;
+  };
 }
 
 async function getQuestions(): Promise<QuestionType[]> {
-    const response = await fetch_api("/questions", {
-        next: {
-            revalidate: 86400, // 1 dia
-        },
-    });
+  const response = await fetch_api("/questions", {
+    next: {
+      revalidate: 86400, // 1 dia
+    },
+  });
 
-    const result = (await response.json()) as QuestionType[];
+  const result = (await response.json()) as QuestionType[];
 
-    return result;
+  return result;
 }
 
 async function checkCompany(slug: string): Promise<CompanyType | null> {
-    const response = await axios_api.get<CompanyType | null>(
-        `/check-company?slug=${slug}`,
-    );
+  const response = await axios_api.get<CompanyType | null>(
+    `/check-company?slug=${slug}`,
+  );
 
-    const result = response.data;
+  const result = response.data;
 
-    return result;
+  return result;
 }
 
 export async function generateMetadata({
-    params,
+  params,
 }: PageProps): Promise<Metadata> {
-    const company = await checkCompany(params.slug);
+  const company = await checkCompany(params.slug);
 
-    if (!company) {
-        notFound();
-    }
+  if (!company) {
+    notFound();
+  }
 
-    return {
-        title: company.slug,
-    };
+  return {
+    title: company.slug,
+  };
 }
 
 export async function generateStaticParams() {
-    const response = await fetch_api('/list-companies')
+  const response = await fetch_api("/list-companies");
 
-    const companies: CompanyType[] = await response.json()
+  const companies: CompanyType[] = await response.json();
 
-    return companies.map((company) => {
-        return { slug: company.slug }
-    })
+  return companies.map((company) => {
+    return { slug: company.slug };
+  });
 }
 
 export default async function Form({ params }: PageProps) {
-    const questions = await getQuestions();
+  const questions = await getQuestions();
 
-    return (
-        <div className="w-full min-h-[calc(100vh-5rem)] flex flex-col items-center gap-4 pt-16 max-lg:px-0">
-            <Formulary questions_list={questions} slug={params.slug} />
-        </div>
-    );
+  return (
+    <div className="w-full min-h-[calc(100vh-5rem)] flex flex-col items-center gap-4 pt-16 max-lg:px-0">
+      <Formulary questions_list={questions} slug={params.slug} />
+    </div>
+  );
 }
